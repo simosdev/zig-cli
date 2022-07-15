@@ -12,10 +12,9 @@ pub const ParseResult = struct {
 };
 
 pub fn run(cmd: *const command.Command, alloc: Allocator) anyerror!void {
-    var iter = std.process.args();
+    var iter = try std.process.argsWithAllocator(alloc);
     var it = iterators.SystemArgIterator{
         .iter = &iter,
-        .alloc = alloc,
     };
 
     var cr = try Parser(iterators.SystemArgIterator).init(cmd, it, alloc);

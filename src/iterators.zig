@@ -19,11 +19,10 @@ pub const StringSliceIterator = struct {
 
 pub const SystemArgIterator = struct {
     iter: *ArgIterator,
-    alloc: Allocator,
 
     pub fn next(self: *SystemArgIterator) ?[]const u8 {
-        if (self.iter.next(self.alloc)) |arg| {
-            return arg catch unreachable;
+        if (self.iter.next()) |arg| {
+            return arg;
         } else {
             return null;
         }
